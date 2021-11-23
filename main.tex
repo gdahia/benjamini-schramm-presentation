@@ -1,0 +1,692 @@
+\documentclass{beamer}
+
+\usetheme{Rochester}
+
+\usepackage{tikz}
+
+\DeclareMathOperator{\E}{\mathbb{E}}
+\DeclareMathOperator{\m}{\mathbf{m}}
+\DeclareMathOperator{\q}{\mathbf{q}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\G}{\mathrm{G}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\dloc}{\mathrm{dist}_\mathrm{loc}}
+\newcommand{\V}[1]{{V \choose #1}}
+\newcommand{\Gcal}{\mathcal{G}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Borelian}{\mathcal{B}_\mathrm{loc}}
+\newcommand{\M}{\mathcal{M}}
+
+\title{Benjamini-Schramm convergence}
+
+\subtitle{Local convergence of graphs}
+
+\author{Gabriel Dahia}
+
+\institute{IMPA}
+
+\date{\today}
+
+\begin{document}
+
+\beamertemplatenavigationsymbolsempty
+
+\begin{frame}
+  %
+  \titlepage
+  %
+\end{frame}
+
+\begin{frame}{Definitions}
+  %
+  \begin{definition}[Graph, G]<1->
+    %
+    \begin{itemize}
+      %
+      \item $V$, set of $n$ vertices.
+            %
+      \item $E \subseteq {V \choose 2}$, set of $m$ edges.
+            %
+    \end{itemize}
+    %
+  \end{definition}
+
+  \begin{definition}[Neighbors, degree of a vertex]<2->
+    %
+    For $v \in V$, \(N(v) = \{y \mid xy \in E\}\). $d(v) = |N(v)|$.
+    %
+  \end{definition}
+
+\end{frame}
+
+\begin{frame}{Limiting infinite model(s)}
+  %
+  \begin{block}{What happens when $n \to \infty$?}<1->
+    %
+    \begin{itemize}
+      %
+      \item<6-> Local topology
+
+      \item[]
+            %
+            \begin{enumerate}
+              %
+              \item<2-> Degree distribution
+                    %
+              \item<3-> Number of spanning trees
+                    %
+              \item<4-> Matching number
+                    %
+              \item<5> Density of copies of a subgraph $H$
+                    %
+            \end{enumerate}
+
+      \item<7-> Global topology
+            %
+      \item[]
+            %
+            \begin{enumerate}
+              %
+              \setcounter{enumi}{3}
+              %
+              \item<7-> Density of copies of a subgraph $H$
+                    %
+            \end{enumerate}
+            %
+            % in the global topology, the space is compact by szemeredi's regularity
+            % lemma, and by prohorov we have convergence
+            %
+    \end{itemize}
+    %
+  \end{block}
+  %
+\end{frame}
+
+\begin{frame}{Why not a single topology?}
+  %
+  \begin{block}{Weakness of local topology}
+    %
+    Unable to count subgraphs, handle unbounded degrees.
+    %
+  \end{block}
+
+  \begin{block}<2->{Weakness of global topology}
+    %
+    If $\frac{m}{n^2} \to 0$, then it is as if $G$ is empty.
+    %
+  \end{block}
+  %
+\end{frame}
+
+\begin{frame}{Pointed graphs}
+  %
+  \begin{block}{Implicit assumptions}
+    %
+    \begin{enumerate}
+      %
+      \item<2-> $E$ is enumerable
+            %
+      \item<3-> $d(v)$ is finite
+            %
+      \item<4-> connected
+            %
+    \end{enumerate}
+    %
+  \end{block}
+
+  \begin{definition}[Pointed graph $G_v$]<5->
+    %
+    A graph $G$ with its origin defined to be $v$.
+    %
+  \end{definition}
+
+  \begin{definition}[Random pointed graph $\G_v$]<6->
+    %
+    A random variable taking values in the space $(\Gcal, ?)$.
+    %
+  \end{definition}
+
+\end{frame}
+
+\begin{frame}{Local topology}
+
+  \begin{definition}[$r$-Ball]<1->
+    %
+    $B(G_v, r)$ is the homomorphism equivalence class of $G'_v$ such that
+    %
+    \begin{enumerate}
+      %
+      \item $V' = \{u \in V \mid \mathrm{dist}_G(u, v) \le r \}$
+            %
+      \item $E' = E \cap {V' \choose 2}$
+            %
+    \end{enumerate}
+    %
+  \end{definition}
+
+  \begin{definition}[Local distance]<2->
+    %
+    Let $k = \min \{ r \mid B(G_v, r) \ne B(H_u, r) \}$. Then
+    \[\mathrm{dist}_\mathrm{loc}(G_v, H_u) = 2^{-k}.\]
+    %
+  \end{definition}
+
+  \begin{block}{Convergence}<3->
+    %
+    $G_v^{(n)} \to G_v$ if for all $r \ge 0$, $B(G_v^{(n)}, r) \to B(G_v, r)$.
+    %
+  \end{block}
+  %
+  % why? because the distance will not converge to zero otherwise
+  %
+\end{frame}
+
+\begin{frame}{Examples}
+  %
+  \begin{figure}
+    %
+    \begin{tikzpicture}
+      %
+      \node[circle, fill=black, minimum size = 10] (A) at (0, 0) {};
+      %
+      \draw[fill=black] (1, 0) circle (0.05);
+      %
+      \draw[fill=black] (2, 0) circle (0.05);
+      %
+      \draw[fill=black] (3, 0) circle (0.05);
+      %
+      \draw [thick] (A) -- (3, 0);
+      %
+      \draw [-latex] (0.25, 0.5) -- (2.75, 0.5) node[above,midway] {$n$};
+      %
+    \end{tikzpicture}
+    %
+    \caption{Example 1}
+    %
+  \end{figure}
+  %
+  \pause
+  %
+  \begin{figure}
+    %
+    \begin{tikzpicture}
+      %
+      \node[circle, fill=black, minimum size = 10] (A) at (0, 0) {};
+      %
+      \draw[fill=black] (1, 0) circle (0.05);
+      %
+      \draw[fill=black] (2, 0) circle (0.05);
+      %
+      \draw [thick] (A) -- (2, 0);
+      %
+      \draw [thick] (A) -- (-2, 0);
+      %
+      \draw [latex-latex] (-1.75, 0.5) -- (1.75, 0.5) node[above,midway] {$n$};
+      %
+      \draw[fill=black] (-1, 0) circle (0.05);
+      %
+      \draw[fill=black] (-2, 0) circle (0.05);
+      %
+    \end{tikzpicture}
+    %
+    \caption{Example 2}
+    %
+  \end{figure}
+  %
+\end{frame}
+
+\begin{frame}{Examples}
+  %
+  \begin{figure}
+    %
+    \begin{tikzpicture}
+      %
+      \node[circle, fill=black, minimum size = 10] (A) at (0, 0) {};
+      %
+      \draw[fill=black] (1, 0) circle (0.05);
+      %
+      \draw [thick] (A) -- (1, 0);
+      %
+      \draw [thick] (A) -- (-1, 0);
+      %
+      \draw[fill=black] (-1, 0) circle (0.05);
+      %
+      \node[circle, fill=black, minimum size = 10] (B) at (3, 0) {};
+      %
+      \draw[fill=black] (3.7, 0.75) circle (0.05);
+      %
+      \draw [thick] (B) -- (3.7, 0.7);
+      %
+      \draw [thick] (B) -- (2.29, 0.7);
+      %
+      \draw [thick] (B) -- (3, -0.7);
+      %
+      \draw[fill=black] (2.29, 0.7) circle (0.05);
+      %
+      \draw[fill=black] (3, -0.7) circle (0.05);
+      %
+      \node[circle, fill=black, minimum size = 10] (C) at (6, 0) {};
+      %
+      \draw[fill=black] (7, 0) circle (0.05);
+      %
+      \draw[fill=black] (6, -1) circle (0.05);
+      %
+      \draw[fill=black] (6, 1) circle (0.05);
+      %
+      \draw [thick] (C) -- (7, 0);
+      %
+      \draw [thick] (C) -- (6, -1);
+      %
+      \draw [thick] (C) -- (6, 1);
+      %
+      \draw [thick] (C) -- (5, 0);
+      %
+      \draw[fill=black] (5, 0) circle (0.05);
+      %
+      \draw [-latex] (1, 1.5) -- (5, 1.5) node[above,midway] {$n$};
+      %
+    \end{tikzpicture}
+    %
+    \caption{Example 3}
+    %
+  \end{figure}
+  %
+\end{frame}
+
+\begin{frame}{Local topology is Polish}
+  %
+  \begin{proof}[Proof that $\dloc$ is a distance in $\Gcal$]
+    %
+    \begin{enumerate}
+      %
+      \item $\dloc(x, y) = \dloc(y, x)$: from symmetry in definition.
+            %
+            \pause
+            %
+      \item $\dloc(x, z) \le \dloc(x, y) + \dloc(y, z)$: if $\dloc(x, y) \ge \dloc(x, z)$
+            and $\dloc(y, z) \ge \dloc(x, z)$, we are done.
+            %
+            \pause
+            %
+            Wlog, $\dloc(x, y) < \dloc(x, z)$.
+            %
+            \pause
+            %
+            Therefore, for $r = - \lg \dloc(x, z)$ we have $B(x, r) \neq B(z, r)$ and
+            $B(x, r) = B(y, r)$.
+            %
+            \pause
+            %
+            This implies $\dloc(y, z) \ge \dloc(x, z)$.
+            %
+            \pause
+            %
+      \item $\dloc(x, y) = 0$ iff $x = y$: up to homomorphisms.
+            %
+    \end{enumerate}
+    %
+  \end{proof}
+
+  \pause
+
+  \begin{proof}[Proof that $\Gcal$  is separable w.r.t. $\dloc$]
+    %
+    For any $x \in \Gcal$, $\dloc(x, B(x, r)) \le 2^{-r}$.
+    %
+    \pause
+    %
+    As the degrees are finite, the set $\{B(x, r) \mid x \in \Gcal\}$ is separable.
+    %
+    \pause
+    %
+    We take a dense subset for each $r$,
+    %
+    \pause
+    %
+    their union is enumerable and is dense for $\Gcal$.
+    %
+  \end{proof}
+  %
+\end{frame}
+
+\begin{frame}{Local topology is Polish}
+  %
+  \begin{proof}[Proof that $(\Gcal, \dloc)$ is complete]
+    %
+    Given $(x_n)_n$ a Cauchy sequence, we want to show $x_n \to x$ as $n \to \infty$.
+    %
+    \pause
+    %
+    We take $k = 2^{-(r + 1)}$, and as $(x_n)_n$ is Cauchy, for every $s, t \ge n_0(k)$,
+    $\dloc(x_s, x_t) \le 2^{-(r + 1)}$,
+    %
+    \pause
+    %
+    and so $B(x_s, r) = B(x_t, r)$.
+    %
+    \pause
+    %
+    For every $r \ge 0$, let $t(r) = 2^{-(r + 1)}$ and define the sequence $(y_r)_r$ by
+    $y_r = B(x_{n_0(t(r))}, r)$.
+    %
+    \pause
+    %
+    By definition of $y_r$, we know $B(y_r, r') = y_{r'}$ if $r' < r$, \textit{i.e.} the
+    sequence $(y_r)_r$ is coherent.
+    %
+    \pause
+    %
+    We can then define $y$ such that $B(y, r) = y_r$.
+    %
+    \pause
+    %
+    By definition of $\dloc$ and construction of $y$, $x_n \to y$ and we take $x = y$.
+    %
+  \end{proof}
+  %
+\end{frame}
+
+\begin{frame}{Compacts}
+
+  \begin{theorem}[Characterization of compacts]
+    %
+    $\Acal \subseteq \Gcal$ is pre-compact iff for every $r \ge 0$, $\Acal_r = \{B(x, r)
+      \mid x \in \Acal\}$ is pre-compact.
+    %
+  \end{theorem}
+
+  \pause
+
+  \begin{block}{Proof.}
+    %
+    $(\Rightarrow)$: Assume $\Acal$ is pre-compact and fix $r^* \ge 0$.
+    %
+    \pause
+    %
+    Given $(B(x_n, r^*))_n$, we want to find converging $(B(x_{n_i}, r^*))_i$.
+    %
+    \pause
+    %
+    From $(B(x_n, r^*))_n$, we can find $(y_n)_n$ such that $B(y_n, r^*) = B(x_n, r^*)$
+    for every $n$.
+    %
+    \pause
+    %
+    As $\Acal$ is pre-compact, there is converging $(y_{n_i})_i$.
+    %
+    \pause
+    %
+    By definition of convergence in $\dloc$, $(B(y_{n_i}, r))_i$ converges for every $r$,
+    in particular for $r^*$, and we found our converging subsequence.
+    %
+  \end{block}
+  %
+\end{frame}
+
+\begin{frame}{Compacts}
+
+  \begin{theorem}[Characterization of compacts]
+    %
+    $\Acal \subseteq \Gcal$ is pre-compact iff for every $r \ge 0$, $\Acal_r = \{B(x, r)
+      \mid x \in \Acal\}$ is pre-compact.
+    %
+  \end{theorem}
+
+  \begin{proof}
+    %
+    $(\Leftarrow)$: Assume $\Acal_r$ is pre-compact for every $r$ and take $(x_n)_n$ a
+    sequence in $\Acal$.
+    %
+    \pause
+    %
+    We define sequences inductively as follows: we let $x_n^{(1)} = x_n$,
+    %
+    \pause
+    %
+    and from $(x_n^{(r)})_n$, we define $(x_i^{(r + 1)})_i$ by $x_i^{(r + 1)} =
+      x_{n_i}^{(r)}$ where $(B(x_{n_i}^{(r)}, r))_i$ converges.
+    %
+    \pause
+    %
+    By definition of convergence in $\dloc$, the sequence $(B(x_{n_i}^{(r)}, s))_i$
+    converges when $s \le r$.
+    %
+    \pause
+    %
+    Therefore, the sequence $(x_r^{(r)})_r$ is such that for every $t$, $(B(x_r^{(r)},
+      t))_r$ converges.
+    %
+    \pause
+    %
+    But this is a subsequence of $(x_n)_n$ that converges by definition of $\dloc$.
+    %
+  \end{proof}
+  %
+\end{frame}
+
+% remark that local topology can also be extended to any discrete object with the
+% trivial distance and a notion of radius restriction
+
+\begin{frame}{$C_n \to \Z$}
+  %
+  \begin{figure}
+    %
+    \begin{tikzpicture}
+      %
+      \node[circle, fill=black, minimum size = 10] (A) at (0, 1) {};
+      %
+      \draw[fill=black] (1, 0) circle (0.075) {};
+      %
+      \draw[fill=black] (0, -1) circle (0.075) {};
+      %
+      \draw[fill=black] (-1, 0) circle (0.075) {};
+      %
+      \draw (0, 0) circle (1);
+      %
+    \end{tikzpicture}
+    %
+    \hspace{5pt}
+    %
+    \begin{tikzpicture}
+      %
+      \node[circle, fill=black, minimum size = 10] (A) at (0, 1) {};
+      %
+      \draw[fill=black] (0.948, 0.312) circle (0.075) {};
+      %
+      \draw[fill=black] (0.707, -0.707) circle (0.075) {};
+      %
+      \draw[fill=black] (-0.948, 0.312) circle (0.075) {};
+      %
+      \draw[fill=black] (-0.707, -0.707) circle (0.075) {};
+      %
+      \draw (0, 0) circle (1);
+      %
+    \end{tikzpicture}
+    %
+    \hspace{5pt}
+    %
+    \begin{tikzpicture}
+      %
+      \node[circle, fill=black, minimum size = 10] (A) at (0, 1) {};
+      %
+      \draw[fill=black] (1, 0) circle (0.075) {};
+      %
+      \draw[fill=black] (0.707, 0.707) circle (0.075) {};
+      %
+      \draw[fill=black] (0, -1) circle (0.075) {};
+      %
+      \draw[fill=black] (-0.707, 0.707) circle (0.075) {};
+      %
+      \draw[fill=black] (-0.707, -0.707) circle (0.075) {};
+      %
+      \draw[fill=black] (0.707, -0.707) circle (0.075) {};
+      %
+      \draw[fill=black] (-1, 0) circle (0.075) {};
+      %
+      \draw (0, 0) circle (1);
+      %
+    \end{tikzpicture}
+    %
+    \\
+    %
+    \vspace{5pt}
+    %
+    \begin{tikzpicture}
+      %
+      \node (A) at (0, 0) {};
+      %
+      \node (B) at (3, 0) {};
+      %
+      \draw [-latex] (A) -- (B) node[above,midway] {$n$};
+      %
+      %
+    \end{tikzpicture}
+    %
+  \end{figure}
+
+  \pause
+
+  \begin{proof}
+    %
+    We want to find a $G_v$ such that $\dloc(C_n, G_v) \to 0$.
+    %
+    \pause
+    %
+    If $G_v$ has a $u$ such that $d(u) \ne 2$, then $C_n \not \to G_v$.
+    %
+    \pause
+    %
+    If $G_v$ has a cycle of length $n_0$, then for $n > n_0$, $\dloc(G_v, C_n) \ge
+      2^{-n_0}$, and $C_n \not \to G_v$.
+    %
+    \pause
+    %
+    $G_v$ must have no finite cycles and all its vertices must have degree $2$.
+    %
+    \pause
+    %
+    $G_v \cong \Z$ means we must take $r \ge n$ to get $B(G_v, r) \neq B(C_n, r)$, and
+    $\dloc(C_n, \Z) = 2^{-n}$.
+    %
+    \pause
+    %
+    Taking $n \to \infty$ we conclude $C_n \to \Z$.
+    %
+  \end{proof}
+  %
+\end{frame}
+
+\begin{frame}{Simple graphs as random pointed graphs}
+  %
+  \pause
+  %
+  \begin{block}{Definition}
+    %
+    Identify $G$ with $\G_\bullet$ where the origin is chosen uniformly at random.
+    %
+  \end{block}
+
+  \pause
+
+  \begin{block}{Definition (Convergence of sequences of simple graphs)}
+    %
+    $G^{(n)} \to \G^{(\infty)}_\bullet$ iff $\Prob_{\G_\bullet^{(n)}} \Rightarrow
+      \Prob_{\G^{(\infty)}_\bullet}$.
+    %
+  \end{block}
+
+\end{frame}
+
+\begin{frame}{Weak convergence}
+  %
+  \begin{block}{Proposition}
+    %
+    A sequence $(\Prob_{\G_\bullet^{(n)}})_n$ converges weakly to
+    $\Prob_{\G_\bullet^{(\infty)}}$ if and only if for every $r \ge 0$ and every $A \in
+      \mathcal{B}_\mathrm{loc}$, $\Prob(B(\G_\bullet^{(n)}, r) \in A) \to
+      \Prob(B(\G_\bullet^{(\infty)}, r) \in A)$ as $n \to \infty$.
+    %
+  \end{block}
+  %
+  \pause
+  %
+  \begin{proof}
+    %
+    Consider the set $\M = \{\{x \in \Gcal \mid B(x, r) \in A\} \mid A \in \Borelian, r \ge
+      0\}$.
+    %
+    \pause
+    %
+    $\M$ is stable under finite intersections and every set in $\Gcal$ can be written
+    as a countable union of those sets.
+    %
+    \pause
+    %
+    $\M$ is then a convergence determining class.
+    %
+  \end{proof}
+  %
+\end{frame}
+
+\begin{frame}{Examples}
+  %
+  \begin{figure}
+    %
+    \begin{tikzpicture}
+      %
+      \draw[fill=black] (0, 0) circle (0.05);
+      %
+      \draw[fill=black] (1, 0) circle (0.05);
+      %
+      \draw[fill=black] (2, 0) circle (0.05);
+      %
+      \draw [thick] (0, 0) -- (2, 0);
+      %
+      \draw [thick, -latex] (2, 0) -- (3, 0) node[right] {$n$};
+      %
+    \end{tikzpicture}
+    %
+    \caption{Example 1}
+    %
+    % TODO: formalize that it converges to Z, like we did in the circle
+    %
+  \end{figure}
+
+  \begin{figure}
+    %
+    \begin{tikzpicture}
+      %
+      \draw[fill=black] (0, 0) circle (0.05);
+      %
+      \draw[fill=black] (0, 1) circle (0.05);
+      %
+      \draw[fill=black] (1, 0) circle (0.05);
+      %
+      \draw[fill=black] (1, 1) circle (0.05);
+      %
+      \draw[fill=black] (2, 0) circle (0.05);
+      %
+      \draw[fill=black] (3, 0) circle (0.05);
+      %
+      \draw [thick] (0, 0) -- (3, 0);
+      %
+      \draw [thick] (0, 0) -- (0, 1);
+      %
+      \draw [thick] (1, 0) -- (1, 1);
+      %
+      \draw [thick, -latex] (2, -0.3) -- (3, -0.3) node[below,midway] {$n$};
+      %
+      \draw [thick, latex-] (0, -0.3) -- (1, -0.3) node[below,midway] {$n$};
+      %
+    \end{tikzpicture}
+    %
+    \caption{Example 2}
+    %
+    % TODO: formalize this convergence to 1/3, 1/3 and 1/3
+    %
+  \end{figure}
+  %
+\end{frame}
+
+\end{document}
